@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>                     <!--컨트롤러에서 서로다른 컨트롤러가 이곳, 하나의 html 을 향한다-->
+    <meta charset="UTF-8"> <!--add 의 경우 id 가 없이 들어오는것이고 edit 의 경우 id 를 갖고 들어오는것이다.-->
+    <title th:text="${student.id} == null ? '➕ 학생 등록' : '✏️ 학생 수정'"></title>
+    <link rel="stylesheet" th:href="@{/styles.css}"/>
+</head>
+<body>
+<h1 th:text="${student.id} == null ? '➕ 학생 등록' : '✏️ 학생 수정'"></h1>
+<p>
+    <a href="/">🏠 홈으로</a>
+    <a href="/students">👥 학생 목록</a>
+</p>
+                                                                                <!--모델어트리뷰트일때는 이렇게 해야함 (모델어트리뷰트의 student) -->
+<form th:action="${student.id} == null ? @{/students/add} : @{/students/edit}" th:object="${student}" method="post">
+    <input type="hidden" th:field="*{id}"> <!--id 가 없는 경우는 적용되지 않는다.-->
+    <p><label>이름: <input type="text" th:field="*{name}" required /></label></p>
+                                    <!--name="" 이 아니다-->
+    <p><label>점수: <input type="text" th:field="*{score}" required /></label></p>
+    <p>
+        <label>
+            교사:
+            <select th:field="*{teacherId}" required>
+                <option th:each="teacher: ${teachers}" th:value="${teacher.id}" th:text="${teacher.name}"></option>
+            </select>
+        </label>
+    </p>
+    <p>
+        <button type="submit" th:text="${student.id} == null ? '저장' : '수정'">저장</button>
+        <a href="/students">취소</a>
+    </p>
+</form>
+
+</body>
+</html>
