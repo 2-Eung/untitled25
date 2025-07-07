@@ -32,7 +32,9 @@ public class TeacherRepository {
                 "UPDATE teacher SET name = ? WHERE id = ?", teacher.getName(), teacher.getId()
         );                                                     // 바꿀 이름         // 기준이되는 아이디
     }
-
+    public int deleteById(int id) {
+        return jdbcTemplate.update("DELETE FROM teacher WHERE id = ?", id);
+    }
 
 
 
