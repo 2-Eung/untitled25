@@ -64,5 +64,4 @@ public class TeacherController {
 
         return "redirect:/teachers";
     }
-    }
 }
